@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F9ACB55C8D9D6B842D069A7 /* Pods_TuneCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9125303171D2E2285CDBE3 /* Pods_TuneCast.framework */; };
 		C302EFC023273B6A004BB429 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EFBF23273B6A004BB429 /* AppDelegate.swift */; };
 		C302EFC223273B6A004BB429 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EFC123273B6A004BB429 /* ViewController.swift */; };
 		C302EFC523273B6A004BB429 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C302EFC323273B6A004BB429 /* Main.storyboard */; };
@@ -15,6 +16,15 @@
 		C302EFCD23273B6B004BB429 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C302EFCB23273B6B004BB429 /* LaunchScreen.storyboard */; };
 		C302EFD823273B6B004BB429 /* TuneCastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EFD723273B6B004BB429 /* TuneCastTests.swift */; };
 		C302EFE323273B6B004BB429 /* TuneCastUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EFE223273B6B004BB429 /* TuneCastUITests.swift */; };
+		C325158D235D0F5D00FA683D /* signInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C325158C235D0F5D00FA683D /* signInViewController.swift */; };
+		C325158F235D0F7300FA683D /* signUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C325158E235D0F7300FA683D /* signUpViewController.swift */; };
+		C3251591235D0F9300FA683D /* homePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3251590235D0F9300FA683D /* homePageViewController.swift */; };
+		C363DF132362B8EF0037E91D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C363DF122362B8EF0037E91D /* GoogleService-Info.plist */; };
+		C363DF152362E0910037E91D /* settingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C363DF142362E0910037E91D /* settingsViewController.swift */; };
+		C363DF172362E1210037E91D /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C363DF162362E1210037E91D /* global.swift */; };
+		C379EB0623864DE4004CA4F1 /* connectToADeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C379EB0523864DE4004CA4F1 /* connectToADeviceViewController.swift */; };
+		C379EB0823864FB1004CA4F1 /* primaryModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C379EB0723864FB1004CA4F1 /* primaryModeViewController.swift */; };
+		C3A5F88B237B40EB004C2C08 /* accountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A5F88A237B40EB004C2C08 /* accountsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2118EF06B80CB126D147E6D1 /* Pods-TuneCast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TuneCast.debug.xcconfig"; path = "Target Support Files/Pods-TuneCast/Pods-TuneCast.debug.xcconfig"; sourceTree = "<group>"; };
+		287C4D3EAE760BB4E5D3FCEF /* Pods-TuneCast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TuneCast.release.xcconfig"; path = "Target Support Files/Pods-TuneCast/Pods-TuneCast.release.xcconfig"; sourceTree = "<group>"; };
+		2D9125303171D2E2285CDBE3 /* Pods_TuneCast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TuneCast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C302EFBC23273B6A004BB429 /* TuneCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TuneCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C302EFBF23273B6A004BB429 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C302EFC123273B6A004BB429 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +62,15 @@
 		C302EFDE23273B6B004BB429 /* TuneCastUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TuneCastUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C302EFE223273B6B004BB429 /* TuneCastUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuneCastUITests.swift; sourceTree = "<group>"; };
 		C302EFE423273B6B004BB429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C325158C235D0F5D00FA683D /* signInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signInViewController.swift; sourceTree = "<group>"; };
+		C325158E235D0F7300FA683D /* signUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpViewController.swift; sourceTree = "<group>"; };
+		C3251590235D0F9300FA683D /* homePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homePageViewController.swift; sourceTree = "<group>"; };
+		C363DF122362B8EF0037E91D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C363DF142362E0910037E91D /* settingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsViewController.swift; sourceTree = "<group>"; };
+		C363DF162362E1210037E91D /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
+		C379EB0523864DE4004CA4F1 /* connectToADeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connectToADeviceViewController.swift; sourceTree = "<group>"; };
+		C379EB0723864FB1004CA4F1 /* primaryModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = primaryModeViewController.swift; sourceTree = "<group>"; };
+		C3A5F88A237B40EB004C2C08 /* accountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accountsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F9ACB55C8D9D6B842D069A7 /* Pods_TuneCast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8EF4B3FA876B9E4D892B47DF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2118EF06B80CB126D147E6D1 /* Pods-TuneCast.debug.xcconfig */,
+				287C4D3EAE760BB4E5D3FCEF /* Pods-TuneCast.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		C302EFB323273B6A004BB429 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +115,8 @@
 				C302EFD623273B6B004BB429 /* TuneCastTests */,
 				C302EFE123273B6B004BB429 /* TuneCastUITests */,
 				C302EFBD23273B6A004BB429 /* Products */,
+				8EF4B3FA876B9E4D892B47DF /* Pods */,
+				CA0F0F960F9597CABA78CDEF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,9 +136,18 @@
 				C302EFBF23273B6A004BB429 /* AppDelegate.swift */,
 				C302EFC123273B6A004BB429 /* ViewController.swift */,
 				C302EFC323273B6A004BB429 /* Main.storyboard */,
+				C379EB0723864FB1004CA4F1 /* primaryModeViewController.swift */,
+				C363DF142362E0910037E91D /* settingsViewController.swift */,
+				C325158C235D0F5D00FA683D /* signInViewController.swift */,
+				C325158E235D0F7300FA683D /* signUpViewController.swift */,
+				C3251590235D0F9300FA683D /* homePageViewController.swift */,
+				C363DF162362E1210037E91D /* global.swift */,
+				C3A5F88A237B40EB004C2C08 /* accountsViewController.swift */,
+				C379EB0523864DE4004CA4F1 /* connectToADeviceViewController.swift */,
 				C302EFC923273B6B004BB429 /* Assets.xcassets */,
 				C302EFCB23273B6B004BB429 /* LaunchScreen.storyboard */,
 				C302EFCE23273B6B004BB429 /* Info.plist */,
+				C363DF122362B8EF0037E91D /* GoogleService-Info.plist */,
 				C302EFC623273B6A004BB429 /* TuneCast.xcdatamodeld */,
 			);
 			path = TuneCast;
@@ -128,6 +171,14 @@
 			path = TuneCastUITests;
 			sourceTree = "<group>";
 		};
+		CA0F0F960F9597CABA78CDEF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2D9125303171D2E2285CDBE3 /* Pods_TuneCast.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +186,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C302EFE723273B6B004BB429 /* Build configuration list for PBXNativeTarget "TuneCast" */;
 			buildPhases = (
+				D2812ED1D6E72C46119ECF49 /* [CP] Check Pods Manifest.lock */,
 				C302EFB823273B6A004BB429 /* Sources */,
 				C302EFB923273B6A004BB429 /* Frameworks */,
 				C302EFBA23273B6A004BB429 /* Resources */,
+				1237DD0D141879C5ED248098 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -233,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C302EFCD23273B6B004BB429 /* LaunchScreen.storyboard in Resources */,
+				C363DF132362B8EF0037E91D /* GoogleService-Info.plist in Resources */,
 				C302EFCA23273B6B004BB429 /* Assets.xcassets in Resources */,
 				C302EFC523273B6A004BB429 /* Main.storyboard in Resources */,
 			);
@@ -254,14 +308,91 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1237DD0D141879C5ED248098 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TuneCast/Pods-TuneCast-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/Texture/AsyncDisplayKit.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TuneCast/Pods-TuneCast-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D2812ED1D6E72C46119ECF49 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TuneCast-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C302EFB823273B6A004BB429 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C363DF172362E1210037E91D /* global.swift in Sources */,
+				C3251591235D0F9300FA683D /* homePageViewController.swift in Sources */,
+				C325158F235D0F7300FA683D /* signUpViewController.swift in Sources */,
+				C325158D235D0F5D00FA683D /* signInViewController.swift in Sources */,
+				C379EB0823864FB1004CA4F1 /* primaryModeViewController.swift in Sources */,
 				C302EFC223273B6A004BB429 /* ViewController.swift in Sources */,
 				C302EFC023273B6A004BB429 /* AppDelegate.swift in Sources */,
 				C302EFC823273B6A004BB429 /* TuneCast.xcdatamodeld in Sources */,
+				C363DF152362E0910037E91D /* settingsViewController.swift in Sources */,
+				C379EB0623864DE4004CA4F1 /* connectToADeviceViewController.swift in Sources */,
+				C3A5F88B237B40EB004C2C08 /* accountsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +565,7 @@
 		};
 		C302EFE823273B6B004BB429 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2118EF06B80CB126D147E6D1 /* Pods-TuneCast.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -452,6 +584,7 @@
 		};
 		C302EFE923273B6B004BB429 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 287C4D3EAE760BB4E5D3FCEF /* Pods-TuneCast.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

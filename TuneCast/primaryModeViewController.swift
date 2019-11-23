@@ -7,3 +7,11 @@
 //
 
 import Foundation
+import UIKit
+
+class primaryModeViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+}

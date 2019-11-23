@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import Firebase
+
+
+struct myAccount{
+    static var UserName: String = ""
+    static var firstName: String = ""
+    static var lastName: String = ""
+    static var phoneName: String = ""
+    static var email: String = ""
+    static var password: String = ""
+    static var profilePhotos: [String: Data] = [:]
+    static var points: Int = 0
+}
+
