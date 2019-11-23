@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>265069225446-f2oo0v2rvpbq318b8dlkpki5n8aq9j1a.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.265069225446-f2oo0v2rvpbq318b8dlkpki5n8aq9j1a</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBuc9yNy3LCdeSilklZclj2uIG9BsBeTgw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>265069225446</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.basil.TuneCast</string>
+	<key>PROJECT_ID</key>
+	<string>tune-cast</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tune-cast.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:265069225446:ios:54b9c0550fb3d9f4682227</string>
+	<key>DATABASE_URL</key>
+	<string>https://tune-cast.firebaseio.com</string>
+</dict>
+</plist>
