@@ -50,35 +50,48 @@ class signUpViewController: UIViewController {
            }
        }
     
-    @IBAction func createAccount(_ sender: UIButton) {
-        let md5Data = MD5(string:password.text!)
-        let md5Hex =  md5Data.map { String(format: "%02hhx", $0) }.joined()
+    @IBAction func newCreateAccount(_ sender: Any) {
         let emailString = email.text!
-        let emailComma = emailString.replacingOccurrences(of: ".", with: ",")
-        
-        firstName.text = firstName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        lastName.text = lastName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-                
-        //setting up user object
-        let db = Firestore.firestore()
-        db.collection("users").document(emailComma).setData([
-            "email": email.text!,
-                    "firstName": firstName.text!,
-                    "lastName": lastName.text!,
-                    "password": md5Hex,
-                    "points": 10,
-                    
-                ])
-        myAccount.firstName = firstName.text!
-        myAccount.lastName = lastName.text!
-        myAccount.UserName = firstName.text! + " " + lastName.text!
-        myAccount.email = email.text!
-        myAccount.password = md5Hex
-        myAccount.points = 10
+        Auth.auth().createUser(withEmail: emailString, password: password.text!) { authResult, error in
+            // ...
+            print("authenticated")
+            let md5Data = MD5(string:self.password.text!)
+            let md5Hex =  md5Data.map { String(format: "%02hhx", $0) }.joined()
+            let emailString = self.email.text!
+            let emailComma = emailString.replacingOccurrences(of: ".", with: ",")
+            
+            self.firstName.text = self.firstName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            self.lastName.text = self.lastName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            //setting up user object
+            let db = Firestore.firestore()
+            let docData: [String: Any] = [
+                "email": self.email.text!,
+                "firstName": self.firstName.text!,
+                "lastName": self.lastName.text!,
+                "password": md5Hex,
+                "points": 10,
+                ]
+            var ref: DocumentReference? = nil
+            ref = db.collection("users").addDocument(data: docData) { err in
+                if let err = err {
+                    print("error adding document: \(err)")
+                } else {
+                    print("Document added with ID: \(ref!.documentID)")
+                }
             }
-    
+            myAccount.firstName = self.firstName.text!
+            myAccount.lastName = self.lastName.text!
+            myAccount.UserName = self.firstName.text! + " " + self.lastName.text!
+            myAccount.email = self.email.text!
+            myAccount.password = md5Hex
+            myAccount.points = 10
+            self.performSegue(withIdentifier: "signedUp", sender: self)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        createAccountButton.isEnabled = true
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
             view.addGestureRecognizer(tap)
             NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)

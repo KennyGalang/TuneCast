@@ -30,45 +30,43 @@ class signInViewController: UIViewController {
     
     @IBAction func signInButton(_ sender: UIButton) {
         let db = Firestore.firestore()
-        if(emailBox.text! != ""){
-            let emailComma = emailBox.text!.replacingOccurrences(of: ".", with: ",")
-            db.collection("users").document(emailComma).getDocument{ (document, error) in
-                if let document = document, document.exists{
-                    let data = document.data()
-                    let md5Data = MD5(string: self.passwordBox.text!)
-                    let md5Hex =  md5Data.map { String(format: "%02hhx", $0) }.joined()
-                    if data!["password"] as! String == md5Hex {
-                        UserDefaults.standard.set(emailComma, forKey: "email")
-                        UserDefaults.standard.set(true, forKey: "signedIn")
-                        let firstName = data!["firstName"] as! String
-                        let lastName = data!["lastName"] as! String
-                        let points = data!["points"] as! Int
-                        myAccount.UserName = firstName + " " + lastName
-                        myAccount.points = points
+        if(emailBox.text! != "" && passwordBox.text! != ""){
+            let email = emailBox.text!
+            let password = passwordBox.text!
+            Auth.auth().signIn(withEmail: email, password: password) { [weak self] user, error in
+                guard let strongSelf = self else { return }
+                let getUserRef = db.collection("users").whereField("email", isEqualTo: email)
+                getUserRef.getDocuments { (querysnapshot, error) in
+                    if error != nil {
+                        print("Document Error: ", error!)
+                    } else {
+                        if let doc = querysnapshot?.documents, !doc.isEmpty {
+                            for document in doc {
+                                let firstName = document.data()["firstName"] as! String
+                                let lastName = document.data()["lastName"] as! String
+                                let points = document.data()["points"] as! Int
+                                myAccount.UserName = firstName + " " + lastName
+                                myAccount.points = points
+                                myAccount.email = email
+                            }
+                        }
+                        strongSelf.performSegue(withIdentifier: "goToHome", sender: self)
                     }
-                    else {
-                        print("Incorrect Password")
-                    }
-                }
-                else {
-                    print("Account Doesnt Exist")
                 }
             }
         }
     }
-    
-    
-    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.emailBox.layer.cornerRadius = 10.0
-        self.passwordBox.layer.cornerRadius = 10.0
-        self.signInButton.layer.cornerRadius = 10.0
-        // Do any additional setup after loading the view.
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+            super.viewDidLoad()
+            self.emailBox.layer.cornerRadius = 10.0
+            self.passwordBox.layer.cornerRadius = 10.0
+            self.signInButton.layer.cornerRadius = 10.0
+            // Do any additional setup after loading the view.
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+            view.addGestureRecognizer(tap)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
                
     @objc func dismissKeyboard() {

@@ -8,12 +8,28 @@
 
 import Foundation
 import UIKit
-
+import Firebase
 class settingsViewController: UIViewController {
     
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var signOutBtn: UIButton!
     
+    @IBAction func signOutUser(_ sender: Any) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            self.performSegue(withIdentifier: "backToSignIn", sender: self)
+            myAccount.firstName = ""
+            myAccount.lastName = ""
+            myAccount.UserName = ""
+            myAccount.email = ""
+            myAccount.password = ""
+            myAccount.points = 0
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         profilePhoto.layer.cornerRadius = profilePhoto.frame.size.width/2
