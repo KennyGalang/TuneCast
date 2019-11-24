@@ -9,8 +9,10 @@ target 'TuneCast' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Analytics'
-  pod 'Firebase/Storage'
   pod 'Firebase/Messaging'
   pod 'Firebase/Database'
   pod 'Firebase/Functions'
+  pod 'Geofirestore'
+  pod 'Spartan'
+  pod 'SwipeCellKit'
 end

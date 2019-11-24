@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-#import <FirebaseMessaging/FIRMessaging.h>
-#import "Firebase/Messaging/FIRMessagingDataMessageManager.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import "FIRMessagingDataMessageManager.h"
+#import "FIRMessaging.h"
 
 @class FIRMessagingReceiver;
 @protocol FIRMessagingReceiverDelegate <NSObject>
 
-- (void)receiver:(FIRMessagingReceiver *)receiver
-      receivedRemoteMessage:(FIRMessagingRemoteMessage *)remoteMessage;
+- (void)receiver:(nonnull FIRMessagingReceiver *)receiver
+      receivedRemoteMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage;
 
 @end
 
 @interface FIRMessagingReceiver : NSObject <FIRMessagingDataMessageManagerDelegate>
 
 @property(nonatomic, weak, nullable) id<FIRMessagingReceiverDelegate> delegate;
+/// Whether to use direct channel for direct channel message callback handler in all iOS versions.
+@property(nonatomic, assign) BOOL useDirectChannel;
 
 @end
-
-NS_ASSUME_NONNULL_END

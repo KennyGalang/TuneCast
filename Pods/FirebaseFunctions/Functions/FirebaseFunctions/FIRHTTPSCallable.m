@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
     }
     _name = [name copy];
     _functions = functions;
-    _timeoutInterval = 70.0;
   }
   return self;
 }
@@ -64,10 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)callWithObject:(nullable id)data
             completion:(void (^)(FIRHTTPSCallableResult *_Nullable result,
                                  NSError *_Nullable error))completion {
-  [_functions callFunction:_name
-                withObject:data
-                   timeout:self.timeoutInterval
-                completion:completion];
+  [_functions callFunction:_name withObject:data completion:completion];
 }
 
 @end

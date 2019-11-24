@@ -31,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)callFunction:(NSString *)name
           withObject:(nullable id)data
-             timeout:(NSTimeInterval)timeout
           completion:(void (^)(FIRHTTPSCallableResult *_Nullable result,
                                NSError *_Nullable error))completion;
 

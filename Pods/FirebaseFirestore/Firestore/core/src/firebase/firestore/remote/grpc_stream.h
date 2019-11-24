@@ -25,8 +25,6 @@
 #include <utility>
 #include <vector>
 
-#include "Firestore/core/src/firebase/firestore/util/warnings.h"
-
 #include "Firestore/core/src/firebase/firestore/remote/grpc_call.h"
 #include "Firestore/core/src/firebase/firestore/remote/grpc_completion.h"
 #include "Firestore/core/src/firebase/firestore/remote/grpc_stream_observer.h"
@@ -34,9 +32,7 @@
 #include "Firestore/core/src/firebase/firestore/util/status.h"
 #include "absl/types/optional.h"
 #include "grpcpp/client_context.h"
-SUPPRESS_DOCUMENTATION_WARNINGS_BEGIN()
 #include "grpcpp/generic/generic_stub.h"
-SUPPRESS_END()
 #include "grpcpp/support/byte_buffer.h"
 
 namespace firebase {
@@ -124,7 +120,7 @@ class GrpcStream : public GrpcCall {
  public:
   GrpcStream(std::unique_ptr<grpc::ClientContext> context,
              std::unique_ptr<grpc::GenericClientAsyncReaderWriter> call,
-             const std::shared_ptr<util::AsyncQueue>& worker_queue,
+             util::AsyncQueue* worker_queue,
              GrpcConnection* grpc_connection,
              GrpcStreamObserver* observer);
   ~GrpcStream();
@@ -229,7 +225,7 @@ class GrpcStream : public GrpcCall {
   std::unique_ptr<grpc::ClientContext> context_;
   std::unique_ptr<grpc::GenericClientAsyncReaderWriter> call_;
 
-  std::shared_ptr<util::AsyncQueue> worker_queue_;
+  util::AsyncQueue* worker_queue_ = nullptr;
   GrpcConnection* grpc_connection_ = nullptr;
 
   GrpcStreamObserver* observer_ = nullptr;
