@@ -23,6 +23,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>com.basil.TuneCast</string>
+			<string>com.learnappmaking.Chatter</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>comspotifytestsdk</string>

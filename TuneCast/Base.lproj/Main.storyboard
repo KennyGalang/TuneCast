@@ -1441,10 +1441,10 @@
             </objects>
             <point key="canvasLocation" x="3685.507246376812" y="91.741071428571431"/>
         </scene>
-        <!--View Controller-->
+        <!--Song Player View Controller-->
         <scene sceneID="GP5-ID-4Kw">
             <objects>
-                <viewController id="aye-di-7IL" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="aye-di-7IL" customClass="SongPlayerViewController" customModule="TuneCast" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cuE-1M-4Ll">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1718,6 +1718,9 @@
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUY-d8-D7D">
                                                             <rect key="frame" x="170.5" y="157" width="30" height="30"/>
                                                             <state key="normal" title="Play"/>
+                                                            <connections>
+                                                                <action selector="pressedPlay:" destination="aye-di-7IL" eventType="touchUpInside" id="cNo-bc-0Af"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EH8-Wo-2ni">
                                                             <rect key="frame" x="330" y="152" width="32" height="32"/>
@@ -2302,9 +2305,9 @@
         <image name="primary mode" width="400" height="348"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hRh-Dz-WFP"/>
+        <segue reference="lXi-dC-aBK"/>
         <segue reference="guD-1H-SzY"/>
-        <segue reference="Igd-qL-gkB"/>
-        <segue reference="UKN-tp-aqa"/>
+        <segue reference="pRN-sg-C0G"/>
+        <segue reference="pkt-ed-gBX"/>
     </inferredMetricsTieBreakers>
 </document>
