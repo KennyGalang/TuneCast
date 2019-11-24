@@ -14,6 +14,7 @@
 // limitations under the License.
 
 #import "FUNError.h"
+#import "FIRError.h"
 
 #import "FUNSerializer.h"
 
@@ -64,7 +65,7 @@ FIRFunctionsErrorCode FIRFunctionsErrorCodeForHTTPStatus(NSInteger status) {
  * @param name An error name.
  * @return The error code with this name, or FIRFunctionsErrorCodeUnknown if none.
  */
-NSNumber *FIRFunctionsErrorCodeForName(NSString *name) {
+FIRFunctionsErrorCode FIRFunctionsErrorCodeForName(NSString *name) {
   static NSDictionary<NSString *, NSNumber *> *errors;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -88,7 +89,11 @@ NSNumber *FIRFunctionsErrorCodeForName(NSString *name) {
       @"UNAUTHENTICATED" : @(FIRFunctionsErrorCodeUnauthenticated),
     };
   });
-  return errors[name];
+  NSNumber *code = errors[name];
+  if (code != nil) {
+    return code.intValue;
+  }
+  return FIRFunctionsErrorCodeInternal;
 }
 
 /**
@@ -136,11 +141,6 @@ NSString *FUNDescriptionForErrorCode(FIRFunctionsErrorCode code) {
   return @"UNKNOWN";
 }
 
-NSError *_Nullable FUNErrorForCode(FIRFunctionsErrorCode code) {
-  NSDictionary *userInfo = @{NSLocalizedDescriptionKey : FUNDescriptionForErrorCode(code)};
-  return [NSError errorWithDomain:FIRFunctionsErrorDomain code:code userInfo:userInfo];
-}
-
 NSError *_Nullable FUNErrorForResponse(NSInteger status,
                                        NSData *_Nullable body,
                                        FUNSerializer *serializer) {
@@ -157,12 +157,7 @@ NSError *_Nullable FUNErrorForResponse(NSInteger status,
       id errorDetails = json[@"error"];
       if ([errorDetails isKindOfClass:[NSDictionary class]]) {
         if ([errorDetails[@"status"] isKindOfClass:[NSString class]]) {
-          NSNumber *codeNumber = FIRFunctionsErrorCodeForName(errorDetails[@"status"]);
-          if (!codeNumber) {
-            // If the code in the body is invalid, treat the whole response as malformed.
-            return FUNErrorForCode(FIRFunctionsErrorCodeInternal);
-          }
-          code = codeNumber.intValue;
+          code = FIRFunctionsErrorCodeForName(errorDetails[@"status"]);
           // The default description needs to be updated for the new code.
           description = FUNDescriptionForErrorCode(code);
         }

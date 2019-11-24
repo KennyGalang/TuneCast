@@ -21,17 +21,13 @@
 #include <map>
 #include <memory>
 
-#include "Firestore/core/src/firebase/firestore/util/warnings.h"
-
 #include "Firestore/core/src/firebase/firestore/remote/grpc_call.h"
 #include "Firestore/core/src/firebase/firestore/remote/grpc_completion.h"
 #include "Firestore/core/src/firebase/firestore/util/async_queue.h"
 #include "Firestore/core/src/firebase/firestore/util/status.h"
 #include "Firestore/core/src/firebase/firestore/util/statusor.h"
 #include "grpcpp/client_context.h"
-SUPPRESS_DOCUMENTATION_WARNINGS_BEGIN()
 #include "grpcpp/generic/generic_stub.h"
-SUPPRESS_END()
 #include "grpcpp/support/byte_buffer.h"
 
 namespace firebase {
@@ -50,7 +46,7 @@ class GrpcUnaryCall : public GrpcCall {
 
   GrpcUnaryCall(std::unique_ptr<grpc::ClientContext> context,
                 std::unique_ptr<grpc::GenericClientAsyncResponseReader> call,
-                const std::shared_ptr<util::AsyncQueue>& worker_queue,
+                util::AsyncQueue* worker_queue,
                 GrpcConnection* grpc_connection,
                 const grpc::ByteBuffer& request);
   ~GrpcUnaryCall();
@@ -100,7 +96,7 @@ class GrpcUnaryCall : public GrpcCall {
   // Stored to avoid lifetime issues with gRPC.
   grpc::ByteBuffer request_;
 
-  std::shared_ptr<util::AsyncQueue> worker_queue_;
+  util::AsyncQueue* worker_queue_ = nullptr;
   GrpcConnection* grpc_connection_ = nullptr;
 
   GrpcCompletion* finish_completion_ = nullptr;

@@ -5,13 +5,19 @@
 //  Created by CARFAX Ca on 2019-10-20.
 //  Copyright © 2019 CARFAX Ca. All rights reserved.
 //
-
 import Foundation
 import UIKit
 import Firebase
+import CoreLocation
+import Geofirestore
+import Spartan
 
 class homePageViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate {
-
+    var hostId: String!
+    let locManager = CLLocationManager()
+    public static var authorizationToken: String?
+    public static var loggingEnabled: Bool = true
+    var loginUrl: URL?
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var loader: UIImageView!
     @IBOutlet weak var loaderView: UIView!
@@ -19,6 +25,8 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
     @IBOutlet weak var userPoints: UILabel!
     @IBOutlet weak var modelName: UIDevice!
     @IBOutlet weak var phoneName: UILabel!
+    @IBOutlet weak var connectToHost: UIButton!
+    @IBOutlet weak var createHost: UIButton!
     
     func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
@@ -62,19 +70,74 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
             self.profilePhoto.image = image
             self.profilePhoto.setNeedsDisplay()
         }
-        DispatchQueue.main.async {
-            let uploadRef = Storage.storage().reference(withPath: "profilePhotos/\(myAccount.email).png")
-            guard let imageData = image.jpegData(compressionQuality: 0.7) else {return}
-            let metaData = StorageMetadata.init()
-            metaData.contentType = "image/png"
-            uploadRef.putData(imageData, metadata: metaData){ (downloadMetaData, error) in
-                if let error = error{
-                    print("Error, \(error)")
+//        DispatchQueue.main.async {
+//            let uploadRef = Storage.storage().reference(withPath: "profilePhotos/\(myAccount.email).png")
+//            guard let imageData = image.jpegData(compressionQuality: 0.7) else {return}
+//            let metaData = StorageMetadata.init()
+//            metaData.contentType = "image/png"
+//            uploadRef.putData(imageData, metadata: metaData){ (downloadMetaData, error) in
+//                if let error = error{
+//                    print("Error, \(error)")
+//                } else {
+//                    myAccount.profilePhotos[myAccount.email] = imageData
+//                    print("Succesful upload \(String(describing: downloadMetaData))")
+//                }
+//            }
+//        }
+    }
+    func createHostRef(completion: @escaping (_ message: String) -> Void){
+        let db = Firestore.firestore()
+        var ref:DocumentReference? = nil
+        let docData : [String:Any] = [
+            "email" : myAccount.email,
+            "username" : myAccount.UserName
+            ]
+        ref = db.collection("hosts").addDocument(data: docData) { err in
+            if let err = err {
+                print("error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+                self.hostId = ref!.documentID
+                completion("success")
+            }
+        }
+    }
+    @IBAction func joinHost(_ sender: Any) {
+        let newToken = "BQC3wYhc4B3FzUJaW1a6RmjsNSYgcWkyx37IVNLSiTQcbX07-HUDQg3jvHs505xAppCKuNe0fSC4zF5XRPFxP80GlZakElMJMRFJJBc1QgD7PYEFaglt6WgJtiVlEw1OQV_IlpzkXTJwVciE_xlPuU_ShPqS4GRwEPfPUTiHvDGYznwtEIPAPTm8X1If0SHd0EoiZyPunE7WHK45Oihylgt0TKavcdl7v52T31ZRziiKaS1Oj-EBd_d-tMHHZWDrdzab8hmYnQ"
+        Spartan.authorizationToken = newToken
+        Spartan.loggingEnabled = true
+        var greatSuccess = Spartan.createPlaylist(userId: "zynebbx", name: "testing", isPublic: true, isCollaborative: false, success: { (playlist) in
+            print("we fucking made a playlist boys")
+            // Do something with the playlist
+        }, failure: { (error) in
+            print(error)
+        })
+    }
+    
+    @IBAction func createHostEvent(_ sender: Any) {
+        var currentLocation: CLLocation!
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways){
+            print("recognized create host event")
+            currentLocation = locManager.location
+            let geoFirestoreRef = Firestore.firestore().collection("hosts")
+            let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
+            createHostRef() { (success) in
+                if success == "success" {
+                    print("added host document to collection hosts")
+                    geoFirestore.setLocation(location: currentLocation, forDocumentWithID: self.hostId) { (error) in
+                        if let error = error {
+                            print("An error occured: \(error)")
+                        } else {
+                            print("Saved location successfully!")
+                            self.performSegue(withIdentifier: "goToHosts", sender: self)
+                        }
+                    }
                 } else {
-                    myAccount.profilePhotos[myAccount.email] = imageData
-                    print("Succesful upload \(String(describing: downloadMetaData))")
+                    print("couldn't load top ten")
                 }
             }
+            
         }
     }
     
@@ -94,6 +157,7 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.loaderView.isHidden = false
+        locManager.requestWhenInUseAuthorization()
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true;
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil;
         profilePhoto.layer.cornerRadius = profilePhoto.frame.size.width/2

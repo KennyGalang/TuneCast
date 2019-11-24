@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-#include <utility>
-
 #include "Firestore/core/src/firebase/firestore/remote/write_stream.h"
 
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 #include "Firestore/core/src/firebase/firestore/util/log.h"
 #include "Firestore/core/src/firebase/firestore/util/status.h"
 
-#import "Firestore/Protos/objc/google/firestore/v1/Firestore.pbobjc.h"
+#import "Firestore/Protos/objc/google/firestore/v1beta1/Firestore.pbobjc.h"
 
 namespace firebase {
 namespace firestore {
@@ -30,29 +28,26 @@ namespace remote {
 
 using auth::CredentialsProvider;
 using auth::Token;
-using model::Mutation;
-using nanopb::ByteString;
 using util::AsyncQueue;
 using util::TimerId;
 using util::Status;
 
-WriteStream::WriteStream(
-    const std::shared_ptr<AsyncQueue>& async_queue,
-    std::shared_ptr<CredentialsProvider> credentials_provider,
-    FSTSerializerBeta* serializer,
-    GrpcConnection* grpc_connection,
-    WriteStreamCallback* callback)
-    : Stream{async_queue, std::move(credentials_provider), grpc_connection,
+WriteStream::WriteStream(AsyncQueue* async_queue,
+                         CredentialsProvider* credentials_provider,
+                         FSTSerializerBeta* serializer,
+                         GrpcConnection* grpc_connection,
+                         id<FSTWriteStreamDelegate> delegate)
+    : Stream{async_queue, credentials_provider, grpc_connection,
              TimerId::WriteStreamConnectionBackoff, TimerId::WriteStreamIdle},
       serializer_bridge_{serializer},
-      callback_{NOT_NULL(callback)} {
+      delegate_bridge_{delegate} {
 }
 
-void WriteStream::SetLastStreamToken(const ByteString& token) {
+void WriteStream::SetLastStreamToken(NSData* token) {
   serializer_bridge_.SetLastStreamToken(token);
 }
 
-ByteString WriteStream::GetLastStreamToken() const {
+NSData* WriteStream::GetLastStreamToken() const {
   return serializer_bridge_.GetLastStreamToken();
 }
 
@@ -70,7 +65,7 @@ void WriteStream::WriteHandshake() {
   // stream token on the handshake, ignoring any stream token we might have.
 }
 
-void WriteStream::WriteMutations(const std::vector<Mutation>& mutations) {
+void WriteStream::WriteMutations(NSArray<FSTMutation*>* mutations) {
   EnsureOnQueue();
   HARD_ASSERT(IsOpen(), "Writing mutations requires an opened stream");
   HARD_ASSERT(handshake_complete(),
@@ -85,8 +80,8 @@ void WriteStream::WriteMutations(const std::vector<Mutation>& mutations) {
 
 std::unique_ptr<GrpcStream> WriteStream::CreateGrpcStream(
     GrpcConnection* grpc_connection, const Token& token) {
-  return grpc_connection->CreateStream("/google.firestore.v1.Firestore/Write",
-                                       token, this);
+  return grpc_connection->CreateStream(
+      "/google.firestore.v1beta1.Firestore/Write", token, this);
 }
 
 void WriteStream::TearDown(GrpcStream* grpc_stream) {
@@ -102,11 +97,11 @@ void WriteStream::TearDown(GrpcStream* grpc_stream) {
 }
 
 void WriteStream::NotifyStreamOpen() {
-  callback_->OnWriteStreamOpen();
+  delegate_bridge_.NotifyDelegateOnOpen();
 }
 
 void WriteStream::NotifyStreamClose(const Status& status) {
-  callback_->OnWriteStreamClose(status);
+  delegate_bridge_.NotifyDelegateOnClose(status);
   // Delegate's logic might depend on whether handshake was completed, so only
   // reset it after notifying.
   handshake_complete_ = false;
@@ -129,14 +124,14 @@ Status WriteStream::NotifyStreamResponse(const grpc::ByteBuffer& message) {
   if (!handshake_complete()) {
     // The first response is the handshake response
     handshake_complete_ = true;
-    callback_->OnWriteStreamHandshakeComplete();
+    delegate_bridge_.NotifyDelegateOnHandshakeComplete();
   } else {
     // A successful first write response means the stream is healthy.
     // Note that we could consider a successful handshake healthy, however, the
     // write itself might be causing an error we want to back off from.
     backoff_.Reset();
 
-    callback_->OnWriteStreamMutationResult(
+    delegate_bridge_.NotifyDelegateOnCommit(
         serializer_bridge_.ToCommitVersion(response),
         serializer_bridge_.ToMutationResults(response));
   }

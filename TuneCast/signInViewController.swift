@@ -44,8 +44,9 @@ class signInViewController: UIViewController {
                             for document in doc {
                                 let firstName = document.data()["firstName"] as! String
                                 let lastName = document.data()["lastName"] as! String
+                                let username = document.data()["username"] as! String
                                 let points = document.data()["points"] as! Int
-                                myAccount.UserName = firstName + " " + lastName
+                                myAccount.UserName = username
                                 myAccount.points = points
                                 myAccount.email = email
                             }

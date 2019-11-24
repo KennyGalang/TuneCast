@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation FUNContextProvider
 
-- (instancetype)initWithAuth:(nullable id<FIRAuthInterop>)auth {
+- (instancetype)initWithAuth:(id<FIRAuthInterop>)auth {
   self = [super init];
   if (self) {
     _auth = auth;
@@ -65,17 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)getContext:(void (^)(FUNContext *_Nullable context, NSError *_Nullable error))completion {
-  // If auth isn't included, call the completion handler and return.
-  if (_auth == nil) {
-    // With no auth, just populate instanceIDToken and call the completion handler.
-    NSString *instanceIDToken = [self instanceIDToken];
-    FUNContext *context = [[FUNContext alloc] initWithAuthToken:nil
-                                                instanceIDToken:instanceIDToken];
-    completion(context, nil);
-    return;
-  }
-
-  // Auth exists, get the auth token.
+  // Get the auth token.
   [_auth getTokenForcingRefresh:NO
                    withCallback:^(NSString *_Nullable token, NSError *_Nullable error) {
                      if (error) {

@@ -12,7 +12,6 @@
 
 #import "FirebaseMessaging.h"
 #import "FIRMessaging.h"
-#import "FIRMessagingExtensionHelper.h"
 
 FOUNDATION_EXPORT double FirebaseMessagingVersionNumber;
 FOUNDATION_EXPORT const unsigned char FirebaseMessagingVersionString[];

@@ -368,6 +368,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0TE-2a-SeS">
                                         <rect key="frame" x="0.0" y="0.0" width="384" height="74"/>
                                         <connections>
+                                            <action selector="joinHost:" destination="fwu-46-gku" eventType="touchUpInside" id="xcq-cV-hBN"/>
                                             <segue destination="R43-aJ-3dA" kind="show" id="iJF-vk-RHo"/>
                                         </connections>
                                     </button>
@@ -418,7 +419,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0k-bq-Sg0">
                                         <rect key="frame" x="0.0" y="0.0" width="384" height="70"/>
                                         <connections>
-                                            <segue destination="aye-di-7IL" kind="show" id="lXi-dC-aBK"/>
+                                            <action selector="createHostEvent:" destination="fwu-46-gku" eventType="touchUpInside" id="NM8-OO-Ug7"/>
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="primary mode" translatesAutoresizingMaskIntoConstraints="NO" id="3dF-X3-04B">
@@ -466,8 +467,8 @@
                                 <rect key="frame" x="15" y="556" width="384" height="306"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NC1-Lw-cCM">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NC1-Lw-cCM">
+                                <rect key="frame" x="0.0" y="677" width="414" height="219"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="BLp-yy-D7C">
                                         <rect key="frame" x="169" y="410" width="76" height="76"/>
@@ -514,13 +515,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="cwb-D1-28d"/>
                     <connections>
+                        <outlet property="connectToHost" destination="0TE-2a-SeS" id="hsG-xB-t3F"/>
+                        <outlet property="createHost" destination="X0k-bq-Sg0" id="i8j-a1-Dif"/>
                         <outlet property="loader" destination="BLp-yy-D7C" id="N5h-oM-VAS"/>
                         <outlet property="loaderView" destination="NC1-Lw-cCM" id="stA-lo-jjY"/>
                         <outlet property="phoneName" destination="d7v-RW-CvR" id="8ga-L9-8tF"/>
                         <outlet property="profilePhoto" destination="Vqb-zA-ntE" id="zxD-As-mYZ"/>
                         <outlet property="userName" destination="9lu-Rd-S1F" id="7Kt-ld-Lta"/>
                         <outlet property="userPoints" destination="JJH-PU-pNY" id="g3a-Ci-DHh"/>
-                        <segue destination="5f0-1n-Or2" kind="show" identifier="signedUp" id="y7Q-bg-01M"/>
+                        <segue destination="aye-di-7IL" kind="show" identifier="goToHosts" id="3g0-mJ-say"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K8Z-pU-d3f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2279,11 +2282,12 @@
                         <outlet property="firstName" destination="4hq-p0-HXD" id="FSW-Ho-KM7"/>
                         <outlet property="lastName" destination="jKD-3f-Z7Z" id="KcJ-Q8-Ofa"/>
                         <outlet property="password" destination="Gly-LU-bG7" id="yb9-Kw-RN3"/>
+                        <segue destination="fwu-46-gku" kind="show" identifier="signedUp" id="XaZ-Jt-dk2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bea-p1-M6I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="889.85507246376824" y="91.741071428571431"/>
+            <point key="canvasLocation" x="946" y="-71"/>
         </scene>
     </scenes>
     <resources>
@@ -2298,10 +2302,9 @@
         <image name="primary mode" width="400" height="348"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CKL-zg-xMZ"/>
-        <segue reference="lXi-dC-aBK"/>
+        <segue reference="3g0-mJ-say"/>
         <segue reference="guD-1H-SzY"/>
-        <segue reference="9ly-ja-2Dk"/>
-        <segue reference="W0U-04-0Zf"/>
+        <segue reference="XaZ-Jt-dk2"/>
+        <segue reference="UKN-tp-aqa"/>
     </inferredMetricsTieBreakers>
 </document>

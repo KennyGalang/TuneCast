@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-#import "Firebase/Messaging/FIRMessagingPubSub.h"
+#import "FIRMessagingPubSub.h"
 
-#import <GoogleUtilities/GULUserDefaults.h>
-#import <FirebaseMessaging/FIRMessaging.h>
-
-#import "Firebase/Messaging/FIRMessagingClient.h"
-#import "Firebase/Messaging/FIRMessagingDefines.h"
-#import "Firebase/Messaging/FIRMessagingLogger.h"
-#import "Firebase/Messaging/FIRMessagingPendingTopicsList.h"
-#import "Firebase/Messaging/FIRMessagingUtilities.h"
-#import "Firebase/Messaging/FIRMessaging_Private.h"
-#import "Firebase/Messaging/NSDictionary+FIRMessaging.h"
-#import "Firebase/Messaging/NSError+FIRMessaging.h"
+#import "FIRMessaging.h"
+#import "FIRMessagingClient.h"
+#import "FIRMessagingDefines.h"
+#import "FIRMessagingLogger.h"
+#import "FIRMessagingPendingTopicsList.h"
+#import "FIRMessagingUtilities.h"
+#import "FIRMessaging_Private.h"
+#import "NSDictionary+FIRMessaging.h"
+#import "NSError+FIRMessaging.h"
 
 static NSString *const kPendingSubscriptionsListKey =
     @"com.firebase.messaging.pending-subscriptions";
@@ -59,6 +57,8 @@ static NSString *const kPendingSubscriptionsListKey =
                      topic:(NSString *)topic
                    options:(NSDictionary *)options
                    handler:(FIRMessagingTopicOperationCompletion)handler {
+  _FIRMessagingDevAssert([token length], @"FIRMessaging error no token specified");
+  _FIRMessagingDevAssert([topic length], @"FIRMessaging error Invalid empty topic specified");
   if (!self.client) {
     handler([NSError errorWithFCMErrorCode:kFIRMessagingErrorCodePubSubFIRMessagingNotSetup]);
     return;
@@ -100,10 +100,14 @@ static NSString *const kPendingSubscriptionsListKey =
                        topic:(NSString *)topic
                      options:(NSDictionary *)options
                      handler:(FIRMessagingTopicOperationCompletion)handler {
+  _FIRMessagingDevAssert([token length], @"FIRMessaging error no token specified");
+  _FIRMessagingDevAssert([topic length], @"FIRMessaging error Invalid empty topic specified");
+
   if (!self.client) {
     handler([NSError errorWithFCMErrorCode:kFIRMessagingErrorCodePubSubFIRMessagingNotSetup]);
     return;
   }
+
   token = [token copy];
   topic = [topic copy];
   if (![options count]) {
@@ -182,25 +186,19 @@ static NSString *const kPendingSubscriptionsListKey =
 #pragma mark - Storing Pending Topics
 
 - (void)archivePendingTopicsList:(FIRMessagingPendingTopicsList *)topicsList {
-  GULUserDefaults *defaults = [GULUserDefaults standardUserDefaults];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSData *pendingData = [NSKeyedArchiver archivedDataWithRootObject:topicsList];
-#pragma clang diagnostic pop
   [defaults setObject:pendingData forKey:kPendingSubscriptionsListKey];
   [defaults synchronize];
 }
 
 - (void)restorePendingTopicsList {
-  GULUserDefaults *defaults = [GULUserDefaults standardUserDefaults];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSData *pendingData = [defaults objectForKey:kPendingSubscriptionsListKey];
   FIRMessagingPendingTopicsList *subscriptions;
   @try {
     if (pendingData) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       subscriptions = [NSKeyedUnarchiver unarchiveObjectWithData:pendingData];
-#pragma clang diagnostic pop
     }
   } @catch (NSException *exception) {
     // Nothing we can do, just continue as if we don't have pending subscriptions

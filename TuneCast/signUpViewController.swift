@@ -59,7 +59,6 @@ class signUpViewController: UIViewController {
             let md5Hex =  md5Data.map { String(format: "%02hhx", $0) }.joined()
             let emailString = self.email.text!
             let emailComma = emailString.replacingOccurrences(of: ".", with: ",")
-            
             self.firstName.text = self.firstName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             self.lastName.text = self.lastName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
@@ -69,24 +68,25 @@ class signUpViewController: UIViewController {
                 "email": self.email.text!,
                 "firstName": self.firstName.text!,
                 "lastName": self.lastName.text!,
+                "username": self.firstName.text! + " " + self.lastName.text!,
                 "password": md5Hex,
                 "points": 10,
                 ]
-            var ref: DocumentReference? = nil
-            ref = db.collection("users").addDocument(data: docData) { err in
-                if let err = err {
-                    print("error adding document: \(err)")
-                } else {
-                    print("Document added with ID: \(ref!.documentID)")
-                }
-            }
             myAccount.firstName = self.firstName.text!
             myAccount.lastName = self.lastName.text!
             myAccount.UserName = self.firstName.text! + " " + self.lastName.text!
             myAccount.email = self.email.text!
             myAccount.password = md5Hex
             myAccount.points = 10
-            self.performSegue(withIdentifier: "signedUp", sender: self)
+            var ref:DocumentReference? = nil
+            ref = db.collection("users").addDocument(data: docData) { err in
+                if let err = err {
+                    print("error adding document: \(err)")
+                } else {
+                    print("Document added with ID: \(ref!.documentID)")
+                    self.performSegue(withIdentifier: "signedUp", sender: self)
+                }
+            }
         }
     }
     override func viewDidLoad() {
