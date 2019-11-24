@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-
+var playlistID: String!
 struct myAccount{
     static var UserName: String = ""
     static var firstName: String = ""

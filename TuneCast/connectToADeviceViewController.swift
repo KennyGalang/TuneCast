@@ -79,7 +79,6 @@ class connectToADeviceViewController: UIViewController, UITableViewDelegate, UIT
         getHosts(){ (success) in
             if success == "success" {
                 self.isDone = true
-                self.hDetails.remove(at: 0)
                 self.tableView.reloadData()
             }
         }
@@ -90,9 +89,9 @@ class connectToADeviceViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                let cell = tableView.dequeueReusableCell(withIdentifier: "hostCell", for:indexPath) as! connectToADeviceCell
-                print("Goran is right")
+               
                 if isDone == true {
-                    print(self.hDetails[indexPath.section].userName)
+                    //print(self.hDetails[indexPath.section].userName)
                     cell.userName?.text = hDetails[indexPath.section].userName
                 }
                cell.layer.borderColor = UIColor.black.cgColor
@@ -100,8 +99,9 @@ class connectToADeviceViewController: UIViewController, UITableViewDelegate, UIT
            }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("host email is", myAccount.hostEmail)
            myAccount.hostEmail = hDetails[indexPath.row].email
+           print("host email is", myAccount.hostEmail)
+        print("username is", hDetails[indexPath.row].userName)
            performSegue(withIdentifier: "castingModeSegue", sender: nil)
        }
 }

@@ -82,55 +82,51 @@ class getSongsViewController: UIViewController, UITableViewDelegate, UITableView
             } else {
                 for document in querySnapshot!.documents {
                     let hostRef = document.reference
-                    //let state = document.data()["state"] as! Bool
-                    //if state { // someone has added a new song to queue need to fetch and update tableview
-                        self.getSongsHelper(ref: hostRef){(success) in
-                            if success == "success" {
-                                self.isDone = true
-                                completion("success")
-                            } else {
-                                self.isDone = false
-                                completion("failure")
+                    let songQueue = hostRef.collection("songQueue").order(by: "likes", descending: true)
+                    songQueue.getDocuments() {
+                        (querySnapshotSongs, error) in
+                        if let error = error {
+                            print("Error getting song documents: \(error)")
+                        } else {
+                            print("found this many songs", querySnapshotSongs!.documents.count)
+                            let count = querySnapshotSongs!.documents.count
+                            var loopCount = 0
+                            for song in querySnapshotSongs!.documents {
+                                let songName = song.data()["songName"] as! String
+                                let artistName = song.data()["artistName"] as! String
+                                let trackId = song.data()["trackID"] as! String
+                                let likes = song.data()["likes"] as! Int
+                                let username = song.data()["username"] as! String
+                                let email = song.data()["email"] as! String
+                                let time = song.data()["timestamp"] as! String
+                                self.songs.append(songElement(songName: songName, artistName: artistName, trackId: trackId, likes: likes, username: username, email: email, timestamp: time))
+                                loopCount += 1
+                                if loopCount == count{
+                                    completion("success")
+                                }
                             }
-                        
+                            
+                        }
                     }
+                   
                 }
             }
         }
     }
-    func getSongsHelper(ref: DocumentReference?, completion: @escaping (_ message: String) -> Void){
-        let songQueue = ref!.collection("songQueue").order(by: "likes", descending: true)
-        songQueue.getDocuments() {
-            (querySnapshotSongs, error) in
-            if let error = error {
-                print("Error getting song documents: \(error)")
-            } else {
-                for song in querySnapshotSongs!.documents {
-                    let songName = song.data()["songName"] as! String
-                    let artistName = song.data()["artistName"] as! String
-                    let trackId = song.data()["trackID"] as! String
-                    let likes = song.data()["likes"] as! Int
-                    let username = song.data()["username"] as! String
-                    let email = song.data()["email"] as! String
-                    let time = song.data()["timestamp"] as! String
-                    self.songs.append(songElement(songName: songName, artistName: artistName, trackId: trackId, likes: likes, username: username, email: email, timestamp: time))
-                }
-                completion("success")
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         search = searchArtist.text!
         let hostEmail = myAccount.hostEmail
-        print("the host EMAIL ISSSSSSSSSSS:  ", hostEmail)
         if hostEmail != ""{
             getSongs(hostEmail: hostEmail){ (success) in
                 if success == "success"{
                     print("should be displaying these songs")
                     print(self.songs)
+                    //self.songs.removeFirst()
                     self.isDone = true
-                    self.tableView.reloadData()
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                    }
+                    
                 }
                 
             }
@@ -153,9 +149,9 @@ class getSongsViewController: UIViewController, UITableViewDelegate, UITableView
                let cell = tableView.dequeueReusableCell(withIdentifier: "songCell", for:indexPath) as! songQueueTableCell
                 if isDone == true {
                     //print(self.songs[indexPath.section].songName)
-                    cell.songName.text = songs[indexPath.section].songName
-                    cell.userName.text = songs[indexPath.section].username
-                    cell.artistName.text = songs[indexPath.section].artistName
+                    cell.songName.text = songs[indexPath.row].songName
+                    cell.userName.text = songs[indexPath.row].username
+                    cell.artistName.text = songs[indexPath.row].artistName
                 }
                cell.layer.borderColor = UIColor.black.cgColor
                return cell
@@ -196,7 +192,7 @@ class TableViewController: UITableViewController {
     
     
 //    var headers = ["Authorization": "Bearer \(AppDelegate.accessToken)" ]
-    var headers = ["Authorization": " Bearer BQBCtYBbg8Q1gIt7V5B3Yf3l84iJsmu48MN676EpkG1B2UTgJ3mMTTNeWTZU22x9_qttOkhwWaRoAnH-HSQh4homIxcUdYXMvM3vq8TZoPauz0G1F_TWEYNzsHz5CNVXi96w-Iqxxp2uLuWHYNiXNDlKVFugEl2WjnpIEE5zHjq8f68ZmPmZVkcb9edWd4R3PhxtlQesMt45SzO12jbwTi2M42pgXavmOJK4dMkuweVhq0ECUOe46LqiucK4JweL7Az_mz6iAA"]
+    var headers = ["Authorization": " Bearer BQC3F9ENL5iPW3NmD6ZxINQM-iDmxY74dDSNyRAeSICmlLrlFdml-GpHyIf4je5hycHUDNmtG_hj-T0L_xVBNhJ644_ZKPxWVxu6W4IBB1TFek5pxHFsqmguX6Wf5njZ_fI6D8O4rR_qYNkrKEEJ1DY2mEtFWPR0AT-QBknLOytuTyh35_GGU5dzhueuK-3eBjMnoP6PQtoEFM0lt3q50QQxLfd2Y9eEBVWPBWJTOeb6FtNcFOyls15hCPFMZ8bY4033CWUJuw"]
 //    var searchURL = ""
 //    let artist = search
     let searchURL = "https://api.spotify.com/v1/search?q=\(search)&type=track&limit=10&offset=5"
@@ -312,7 +308,13 @@ class TableViewController: UITableViewController {
             }
         }
     }
-   
+   func appendSongToPlaylist(userID: String, playlistID: String, trackUris: [String]){
+           _ = Spartan.addTracksToPlaylist(userId: userID, playlistId: playlistID, trackUris: trackUris, success: { (snapshot) in
+               // Do something with the snapshot
+           }, failure: { (error) in
+               print(error)
+           })
+       }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let trackId = songs[indexPath.row].id
         let artist = songs[indexPath.row].artist
@@ -321,7 +323,14 @@ class TableViewController: UITableViewController {
         let newSongElement = songElement(songName: name, artistName: artist, trackId: trackId, likes: 0, username: myAccount.UserName, email: myAccount.email, timestamp: "test")
         addSongToQueueHelper(song: newSongElement){ (success) in
             if success == "success"{
+                let selectedSong = newSongElement
+                let playId = myAccount.playlistID
+                var playID = playId as! String
+                var tracks = [String]()
+                tracks.append(selectedSong.trackId)
+                self.appendSongToPlaylist(userID: "zynebbx", playlistID: myAccount.playlistID, trackUris: tracks)
                 print("added to firebase")
+                self.performSegue(withIdentifier: "goBackToViewController", sender: self)
             }
         }
         print(songs[indexPath.row].id)

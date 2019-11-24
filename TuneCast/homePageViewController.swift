@@ -161,11 +161,12 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
             currentLocation = locManager.location
             let geoFirestoreRef = Firestore.firestore().collection("hosts")
             let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
-            newToken = "BQAnmmTCy7yGUKGmTfKrYXNeccsBhjt_6AVHv-Lr8jYx0KcWxAsu_8o3f1-zE361OiGxsklOXqMX28V9TqR82NncS-X3As7pI6ymi6HWqBCEHjkwCpR1RaDdrEZ5eTJh87mogonMRDkx9oVMszjz8YuM8aK7Z4Kh5LSgoqOI_O2W6DNJEXjI81xcCMi034oBOVDhR_5zDrTrfYgBI_DoOZRlAzxGS9-zkIOv1DKEQG4Hc0ZmXfVfI2SiIIwF5tBm-7AJcqOtLw"
+            newToken = "BQDW3EXBTiXpxdZNLoq-9_g2rYkgZ62_MJfaUKW0JyEJ_9yvjuhmOjt_ZKZpzdkfvBMSc5hTFSrK0b5MHm4Yc6Xgxk9PhVpD8WYY_c1is12HkMXlQmp4iei6yTHGt4SIavKYXyaTa-fKaeigPRbdWuejzko-qLwkohMHDoGCPw1EgUOOIXIpkpQBjJLBZfAqtF9HrFM8-8iGfraF-Dy-6nEdIhDKyLINYgQ0uc1HytMm7YMEWpoMD7UVLC2iw2EfcIkZusp9jg"
             Spartan.authorizationToken = newToken
             Spartan.loggingEnabled = true
-            let greatSuccess = Spartan.createPlaylist(userId: "zynebbx", name: "testing1", isPublic: true, isCollaborative: false, success: { (playlist) in
+            let greatSuccess = Spartan.createPlaylist(userId: "zynebbx", name: "HackingPlaylist", isPublic: true, isCollaborative: false, success: { (playlist) in
                 let playlistID = playlist.id as! String
+                myAccount.playlistID = playlistID
                 // Do something with the playlist
                 self.createHostRef(playlistID: playlistID) { (success) in
                     if success == "success" {
