@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F9ACB55C8D9D6B842D069A7 /* Pods_TuneCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9125303171D2E2285CDBE3 /* Pods_TuneCast.framework */; };
+		5364452E238A5F0A00DCC5ED /* SongQueueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5364452D238A5F0A00DCC5ED /* SongQueueTableViewController.swift */; };
 		C302EFC023273B6A004BB429 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EFBF23273B6A004BB429 /* AppDelegate.swift */; };
 		C302EFC223273B6A004BB429 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EFC123273B6A004BB429 /* ViewController.swift */; };
 		C302EFC523273B6A004BB429 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C302EFC323273B6A004BB429 /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		2118EF06B80CB126D147E6D1 /* Pods-TuneCast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TuneCast.debug.xcconfig"; path = "Target Support Files/Pods-TuneCast/Pods-TuneCast.debug.xcconfig"; sourceTree = "<group>"; };
 		287C4D3EAE760BB4E5D3FCEF /* Pods-TuneCast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TuneCast.release.xcconfig"; path = "Target Support Files/Pods-TuneCast/Pods-TuneCast.release.xcconfig"; sourceTree = "<group>"; };
 		2D9125303171D2E2285CDBE3 /* Pods_TuneCast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TuneCast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5364452D238A5F0A00DCC5ED /* SongQueueTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongQueueTableViewController.swift; sourceTree = "<group>"; };
 		C302EFBC23273B6A004BB429 /* TuneCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TuneCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C302EFBF23273B6A004BB429 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C302EFC123273B6A004BB429 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				C302EFBF23273B6A004BB429 /* AppDelegate.swift */,
 				C302EFC123273B6A004BB429 /* ViewController.swift */,
 				C302EFC323273B6A004BB429 /* Main.storyboard */,
+				5364452D238A5F0A00DCC5ED /* SongQueueTableViewController.swift */,
 				C379EB0723864FB1004CA4F1 /* primaryModeViewController.swift */,
 				C363DF142362E0910037E91D /* settingsViewController.swift */,
 				C325158C235D0F5D00FA683D /* signInViewController.swift */,
@@ -374,6 +377,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5364452E238A5F0A00DCC5ED /* SongQueueTableViewController.swift in Sources */,
 				C363DF172362E1210037E91D /* global.swift in Sources */,
 				C3251591235D0F9300FA683D /* homePageViewController.swift in Sources */,
 				C325158F235D0F7300FA683D /* signUpViewController.swift in Sources */,

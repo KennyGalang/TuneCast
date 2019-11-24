@@ -160,6 +160,7 @@ PODS:
   - Protobuf (3.10.0)
   - Spartan (1.2.1):
     - AlamoRecord (~> 1.2.0)
+  - SwipeCellKit (2.7.1)
   - Texture (2.8.1):
     - Texture/AssetsLibrary (= 2.8.1)
     - Texture/Core (= 2.8.1)
@@ -191,6 +192,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Geofirestore
   - Spartan
+  - SwipeCellKit
   - Texture
 
 SPEC REPOS:
@@ -225,6 +227,7 @@ SPEC REPOS:
     - PINRemoteImage
     - Protobuf
     - Spartan
+    - SwipeCellKit
     - Texture
 
 SPEC CHECKSUMS:
@@ -258,8 +261,9 @@ SPEC CHECKSUMS:
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   Spartan: 2fb99ad25f2b0e8182799f251c800091977f0a40
+  SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
 
-PODFILE CHECKSUM: 0d914c23a68cb7b5611beab8936e2d0345114b21
+PODFILE CHECKSUM: 3a7653695aaabb06e928e122f128888be7879d70
 
 COCOAPODS: 1.7.2

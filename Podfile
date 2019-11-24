@@ -14,4 +14,5 @@ target 'TuneCast' do
   pod 'Firebase/Functions'
   pod 'Geofirestore'
   pod 'Spartan'
+  pod 'SwipeCellKit'
 end

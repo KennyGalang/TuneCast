@@ -12,6 +12,16 @@ import CoreLocation
 import Geofirestore
 import Spartan
 
+struct songElement:Codable {
+    var songName : String!
+    var artistName : String!
+    var trackId : String!
+    var likes : Int!
+    var username  : String!
+    var email : String!
+    var timestamp : String!
+}
+
 class homePageViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate {
     var hostId: String!
     let locManager = CLLocationManager()
@@ -85,12 +95,13 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
 //            }
 //        }
     }
-    func createHostRef(completion: @escaping (_ message: String) -> Void){
+    func createHostRef(playlistID: String,completion: @escaping (_ message: String) -> Void){
         let db = Firestore.firestore()
         var ref:DocumentReference? = nil
         let docData : [String:Any] = [
             "email" : myAccount.email,
-            "username" : myAccount.UserName
+            "username" : myAccount.UserName,
+            "playlistID" : playlistID
             ]
         ref = db.collection("hosts").addDocument(data: docData) { err in
             if let err = err {
@@ -101,6 +112,41 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
                 completion("success")
             }
         }
+    }
+    func addSongToQueue(ref: DocumentReference?, song: songElement){
+        let docData : [String:Any] = [
+            "songName"    : song.songName!,
+            "artistName"  : song.artistName!,
+            "trackID"     : song.trackId!,
+            "likes"       : song.likes!,
+            "username"    : song.username!,
+            "email"       : song.email!,
+            "timestamp"   : song.timestamp!
+        ]
+        let songRef = ref!.collection("songQueue").addDocument(data: docData){ err in
+            if let err = err{
+                print("error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+            }
+        }
+    }
+    func updateLikes(){
+        
+    }
+    func appendSongToPlaylist(userID: String, playlistID: String, trackUris: [String]){
+        _ = Spartan.addTracksToPlaylist(userId: userID, playlistId: playlistID, trackUris: trackUris, success: { (snapshot) in
+            // Do something with the snapshot
+        }, failure: { (error) in
+            print(error)
+        })
+    }
+    func createPlaylist(userID: String, name: String){
+        _ = Spartan.createPlaylist(userId: userID, name: name, isPublic: true, isCollaborative: false, success: { (playlist) in
+            // Do something with the playlist
+        }, failure: { (error) in
+            print(error)
+        })
     }
     @IBAction func joinHost(_ sender: Any) {
         let newToken = "BQC3wYhc4B3FzUJaW1a6RmjsNSYgcWkyx37IVNLSiTQcbX07-HUDQg3jvHs505xAppCKuNe0fSC4zF5XRPFxP80GlZakElMJMRFJJBc1QgD7PYEFaglt6WgJtiVlEw1OQV_IlpzkXTJwVciE_xlPuU_ShPqS4GRwEPfPUTiHvDGYznwtEIPAPTm8X1If0SHd0EoiZyPunE7WHK45Oihylgt0TKavcdl7v52T31ZRziiKaS1Oj-EBd_d-tMHHZWDrdzab8hmYnQ"
@@ -122,7 +168,7 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
             currentLocation = locManager.location
             let geoFirestoreRef = Firestore.firestore().collection("hosts")
             let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
-            createHostRef() { (success) in
+            createHostRef(playlistID: "Hello") { (success) in
                 if success == "success" {
                     print("added host document to collection hosts")
                     geoFirestore.setLocation(location: currentLocation, forDocumentWithID: self.hostId) { (error) in

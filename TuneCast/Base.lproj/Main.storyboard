@@ -1836,7 +1836,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requests" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEz-VP-1uJ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WhatzNext" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEz-VP-1uJ">
                                 <rect key="frame" x="111" y="51" width="192" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="aPF-N7-E22"/>
@@ -1861,7 +1861,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIN-VO-cbW">
                                 <rect key="frame" x="20" y="158.5" width="374" height="297.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Requests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs7-dE-f4q">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Songs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs7-dE-f4q">
                                         <rect key="frame" x="16" y="12" width="152" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="152" id="aBj-u1-5zG"/>
@@ -1874,7 +1874,7 @@
                                         <rect key="frame" x="8" y="43" width="358" height="246.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="q1k-Lp-1Yg">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="songCell" id="q1k-Lp-1Yg">
                                                 <rect key="frame" x="0.0" y="28" width="358" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="q1k-Lp-1Yg" id="tia-GH-cZm">
@@ -2302,9 +2302,9 @@
         <image name="primary mode" width="400" height="348"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3g0-mJ-say"/>
+        <segue reference="hRh-Dz-WFP"/>
         <segue reference="guD-1H-SzY"/>
-        <segue reference="XaZ-Jt-dk2"/>
+        <segue reference="Igd-qL-gkB"/>
         <segue reference="UKN-tp-aqa"/>
     </inferredMetricsTieBreakers>
 </document>
