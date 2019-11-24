@@ -243,7 +243,7 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
                         })
         })
         self.userName.text = myAccount.UserName
-        self.userPoints.text = String(myAccount.points)
+        //self.userPoints.text = String(myAccount.points)
         //self.phoneName.text = modelName.systemName
     }
     
