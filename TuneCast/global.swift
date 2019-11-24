@@ -19,5 +19,7 @@ struct myAccount{
     static var password: String = ""
     static var profilePhotos: [String: Data] = [:]
     static var points: Int = 0
+    static var hostEmail: String = ""
+    static var playlistID: String = ""
 }
 

@@ -15,4 +15,5 @@ target 'TuneCast' do
   pod 'Geofirestore'
   pod 'Spartan'
   pod 'SwipeCellKit'
+  pod 'Alamofire', '~> 4.9.1'
 end

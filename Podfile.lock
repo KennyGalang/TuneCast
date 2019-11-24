@@ -183,6 +183,7 @@ PODS:
     - Texture/Core
 
 DEPENDENCIES:
+  - Alamofire (~> 4.9.1)
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
@@ -196,7 +197,7 @@ DEPENDENCIES:
   - Texture
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AlamofireObjectMapper
     - AlamoRecord
@@ -264,6 +265,6 @@ SPEC CHECKSUMS:
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
 
-PODFILE CHECKSUM: 3a7653695aaabb06e928e122f128888be7879d70
+PODFILE CHECKSUM: d5cbda4d6003b793e8d787dfcbadc642a8512210
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.8.4

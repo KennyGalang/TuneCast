@@ -12,19 +12,12 @@ import CoreLocation
 import Geofirestore
 import Spartan
 
-struct songElement:Codable {
-    var songName : String!
-    var artistName : String!
-    var trackId : String!
-    var likes : Int!
-    var username  : String!
-    var email : String!
-    var timestamp : String!
-}
+
 
 class homePageViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate {
     var hostId: String!
     let locManager = CLLocationManager()
+    var newToken: String!
     public static var authorizationToken: String?
     public static var loggingEnabled: Bool = true
     var loginUrl: URL?
@@ -168,22 +161,30 @@ class homePageViewController: UIViewController, UINavigationControllerDelegate, 
             currentLocation = locManager.location
             let geoFirestoreRef = Firestore.firestore().collection("hosts")
             let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
-            createHostRef(playlistID: "Hello") { (success) in
-                if success == "success" {
-                    print("added host document to collection hosts")
-                    geoFirestore.setLocation(location: currentLocation, forDocumentWithID: self.hostId) { (error) in
-                        if let error = error {
-                            print("An error occured: \(error)")
-                        } else {
-                            print("Saved location successfully!")
-                            self.performSegue(withIdentifier: "goToHosts", sender: self)
+            newToken = "BQAnmmTCy7yGUKGmTfKrYXNeccsBhjt_6AVHv-Lr8jYx0KcWxAsu_8o3f1-zE361OiGxsklOXqMX28V9TqR82NncS-X3As7pI6ymi6HWqBCEHjkwCpR1RaDdrEZ5eTJh87mogonMRDkx9oVMszjz8YuM8aK7Z4Kh5LSgoqOI_O2W6DNJEXjI81xcCMi034oBOVDhR_5zDrTrfYgBI_DoOZRlAzxGS9-zkIOv1DKEQG4Hc0ZmXfVfI2SiIIwF5tBm-7AJcqOtLw"
+            Spartan.authorizationToken = newToken
+            Spartan.loggingEnabled = true
+            let greatSuccess = Spartan.createPlaylist(userId: "zynebbx", name: "testing1", isPublic: true, isCollaborative: false, success: { (playlist) in
+                let playlistID = playlist.id as! String
+                // Do something with the playlist
+                self.createHostRef(playlistID: playlistID) { (success) in
+                    if success == "success" {
+                        print("added host document to collection hosts")
+                        geoFirestore.setLocation(location: currentLocation, forDocumentWithID: self.hostId) { (error) in
+                            if let error = error {
+                                print("An error occured: \(error)")
+                            } else {
+                                print("Saved location successfully!")
+                                self.performSegue(withIdentifier: "goToHosts", sender: self)
+                            }
                         }
+                    } else {
+                        print("couldn't create host 😞")
                     }
-                } else {
-                    print("couldn't load top ten")
                 }
-            }
-            
+            }, failure: { (error) in
+                print(error)
+            })
         }
     }
     

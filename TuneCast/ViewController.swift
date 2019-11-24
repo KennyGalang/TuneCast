@@ -19,11 +19,36 @@ class ViewController: UIViewController {
         checkAuth()
     }
     func checkAuth(){
-        if Auth.auth().currentUser != nil {
-            print("auth is not nil")
-            self.performSegue(withIdentifier: "goHome", sender: self)
+            if Auth.auth().currentUser != nil {
+                print("auth is not nil")
+                self.updateMyAccount(uid: Auth.auth().currentUser!.uid){(success) in
+                    if success == "success" {
+                        self.performSegue(withIdentifier: "goHome", sender: self)
+                    } else {
+                        print("could not load user data")
+                    }
+                }
+                
+            }
         }
-    }
-
+        func updateMyAccount(uid:String, completion: @escaping (_ message: String) -> Void){
+            let db = Firestore.firestore()
+            let userRef = db.collection("users").whereField("uid", isEqualTo: uid)
+            userRef.getDocuments() {
+                (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting host documents: \(error)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let email = document.data()["email"] as! String
+                        let username = document.data()["username"] as! String
+                        myAccount.UserName = username
+                        myAccount.email = email
+                        completion("success")
+                    }
+                    
+                }
+            }
+        }
 }
 

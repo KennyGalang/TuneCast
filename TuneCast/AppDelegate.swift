@@ -12,8 +12,9 @@ import AsyncDisplayKit
 import Firebase
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
+class AppDelegate: UIResponder, UIApplicationDelegate, SPTAppRemoteDelegate {
+    
+    static var tokenString = ""
     var window: UIWindow?
 
 
@@ -91,6 +92,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    static var accessToken = UserDefaults.standard.string(forKey: kAccessTokenKey) {
+        didSet {
+            let defaults = UserDefaults.standard
+            defaults.set(accessToken, forKey: AppDelegate.kAccessTokenKey)
+            defaults.synchronize()
+        }
+    }
+    private let redirectUri = URL(string:"comspotifytestsdk://")!
+       //    private let clientIdentifier = "089d841ccc194c10a77afad9e1c11d54"
+       private let clientIdentifier = "99eec6e883ad49fb90367400f1b638ef"
+       private let name = "Now Playing View"
+           
+       // keys
+       static private let kAccessTokenKey = "access-token-key"
+       
+       var window2: UIWindow?
+    
 
+    class var sharedInstance: AppDelegate {
+        get {
+            return UIApplication.shared.delegate as! AppDelegate
+        }
+    }
+    var playerViewController: SongPlayerViewController {
+        get {
+            let navController = self.window2?.rootViewController?.children[0] as! UINavigationController
+            return navController.topViewController as! SongPlayerViewController
+        }
+    }
+    lazy var appRemote: SPTAppRemote = {
+        let configuration = SPTConfiguration(clientID: self.clientIdentifier, redirectURL: self.redirectUri)
+        let appRemote = SPTAppRemote(configuration: configuration, logLevel: .debug)
+        appRemote.connectionParameters.accessToken = AppDelegate.self.accessToken
+        appRemote.delegate = self
+        return appRemote
+    }()
+    func connect() {
+        playerViewController.appRemoteConnecting()
+        appRemote.connect()
+    }
+
+    // MARK: AppRemoteDelegate
+    
+    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
+        self.appRemote = appRemote
+        playerViewController.appRemoteConnected()
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
+        print("didFailConnectionAttemptWithError")
+        playerViewController.appRemoteDisconnect()
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
+        print("didDisconnectWithError")
+        playerViewController.appRemoteDisconnect()
+    }
+    
 }
 

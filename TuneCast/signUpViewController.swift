@@ -71,6 +71,7 @@ class signUpViewController: UIViewController {
                 "username": self.firstName.text! + " " + self.lastName.text!,
                 "password": md5Hex,
                 "points": 10,
+                "uid"   : authResult?.user.uid
                 ]
             myAccount.firstName = self.firstName.text!
             myAccount.lastName = self.lastName.text!
