@@ -53,7 +53,10 @@ class getSongsViewController: UIViewController, UITableViewDelegate, UITableView
     let cellSpacingHeight: CGFloat = 5
     
     func numberOfSections(in tableView: UITableView) -> Int {
-           return self.songs.count
+     
+            return 1
+    
+          
        }
        
        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -67,12 +70,12 @@ class getSongsViewController: UIViewController, UITableViewDelegate, UITableView
        }
        
        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return 1
+           return self.songs.count
        }
     
     var songs = [songElement]()
     var isDone = false
-    func getSongs(hostEmail: String, completion: @escaping (_ message: String) -> Void){
+    func getSongs(hostEmail: String){
         let db = Firestore.firestore()
         let ref = db.collection("hosts").whereField("email", isEqualTo: hostEmail)
         ref.getDocuments() {
@@ -89,8 +92,6 @@ class getSongsViewController: UIViewController, UITableViewDelegate, UITableView
                             print("Error getting song documents: \(error)")
                         } else {
                             print("found this many songs", querySnapshotSongs!.documents.count)
-                            let count = querySnapshotSongs!.documents.count
-                            var loopCount = 0
                             for song in querySnapshotSongs!.documents {
                                 let songName = song.data()["songName"] as! String
                                 let artistName = song.data()["artistName"] as! String
@@ -100,12 +101,9 @@ class getSongsViewController: UIViewController, UITableViewDelegate, UITableView
                                 let email = song.data()["email"] as! String
                                 let time = song.data()["timestamp"] as! String
                                 self.songs.append(songElement(songName: songName, artistName: artistName, trackId: trackId, likes: likes, username: username, email: email, timestamp: time))
-                                loopCount += 1
-                                if loopCount == count{
-                                    completion("success")
-                                }
+                                self.isDone = true
+                                self.tableView.reloadData()
                             }
-                            
                         }
                     }
                    
@@ -117,45 +115,50 @@ class getSongsViewController: UIViewController, UITableViewDelegate, UITableView
         search = searchArtist.text!
         let hostEmail = myAccount.hostEmail
         if hostEmail != ""{
-            getSongs(hostEmail: hostEmail){ (success) in
-                if success == "success"{
-                    print("should be displaying these songs")
-                    print(self.songs)
-                    //self.songs.removeFirst()
-                    self.isDone = true
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
-                    
-                }
-                
-            }
+            getSongs(hostEmail: hostEmail)
         }
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         let hostEmail = myAccount.hostEmail
         if hostEmail != ""{
-            getSongs(hostEmail: hostEmail){ (success) in
-                if success == "success"{
-                    self.isDone = true
-                    self.tableView.reloadData()
-                }
-                
-            }
+            //getSongs(hostEmail: hostEmail){
         }
     }
+    
+    @objc func dismissKeyboard() {
+               //Causes the view (or one of its embedded text fields) to resign the first responder status.
+               view.endEditing(true)
+           }
+           @objc func keyboardWillShow(notification: NSNotification) {
+               if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                   if self.view.frame.origin.y == 0 {
+                       self.view.frame.origin.y -= keyboardSize.height/2
+                   }
+               }
+           }
+           
+           @objc func keyboardWillHide(notification: NSNotification) {
+               if self.view.frame.origin.y != 0 {
+                   self.view.frame.origin.y = 0
+               }
+           }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                let cell = tableView.dequeueReusableCell(withIdentifier: "songCell", for:indexPath) as! songQueueTableCell
                 if isDone == true {
                     //print(self.songs[indexPath.section].songName)
                     cell.songName.text = songs[indexPath.row].songName
-                    cell.userName.text = songs[indexPath.row].username
+                    cell.userName.text = "by " + songs[indexPath.row].username
                     cell.artistName.text = songs[indexPath.row].artistName
                 }
                cell.layer.borderColor = UIColor.black.cgColor
                return cell
            }
+    
     func appendSongToPlaylist(userID: String, playlistID: String, trackUris: [String]){
            _ = Spartan.addTracksToPlaylist(userId: userID, playlistId: playlistID, trackUris: trackUris, success: { (snapshot) in
                // Do something with the snapshot
@@ -192,7 +195,7 @@ class TableViewController: UITableViewController {
     
     
 //    var headers = ["Authorization": "Bearer \(AppDelegate.accessToken)" ]
-    var headers = ["Authorization": " Bearer BQC3F9ENL5iPW3NmD6ZxINQM-iDmxY74dDSNyRAeSICmlLrlFdml-GpHyIf4je5hycHUDNmtG_hj-T0L_xVBNhJ644_ZKPxWVxu6W4IBB1TFek5pxHFsqmguX6Wf5njZ_fI6D8O4rR_qYNkrKEEJ1DY2mEtFWPR0AT-QBknLOytuTyh35_GGU5dzhueuK-3eBjMnoP6PQtoEFM0lt3q50QQxLfd2Y9eEBVWPBWJTOeb6FtNcFOyls15hCPFMZ8bY4033CWUJuw"]
+    var headers = ["Authorization": " Bearer BQDjtObts1WT-1_ZDlXRGp6f0tuIC96iSmvynjuBR5k9u7DfoWFAysfkBFK1kDMdRf9_fgTiem1za0KHqgdaxE45B9oxs9MgE4UPa0ubItQCzW1EvZTXEm9nMHWTFaqhkV4D-IasRJ3AyMfO_TZk95_yAO2gDqwENqeSED__MTWbzAVh_Yj9-EGXDbSO8ey6sgvpeeM9oqnWWFaLE_vx7rmI_sSAPZTGhO2aux4wcT3po70rNiIW0r9ZfM3v2D3o2C0-rX6OHw"]
 //    var searchURL = ""
 //    let artist = search
     let searchURL = "https://api.spotify.com/v1/search?q=\(search)&type=track&limit=10&offset=5"
